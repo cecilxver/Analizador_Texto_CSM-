@@ -21,19 +21,19 @@ public class Main {
                     menu_bucle=false;
                     break;
                 case 2:
-                    analisisContenido();
+                    analisisContenido(archivo_aguardar);
                     menu_bucle=false;
                     break;
-                case 3:
-
-
+                case 4:
+                    System.out.println("Saliendo del sistema. . .");
+                break;
 
             }
         }
 
 
     }
-    public static void analizarTexto(File archivo) throws IOException {
+    public static void analizarTexto(File archivoa) throws IOException {
         Scanner sc=new Scanner(System.in);
         System.out.println("Escriba la ruta del archivo que quiere que sea leída: ");
         String ruta=sc.next();
@@ -61,13 +61,23 @@ public class Main {
         f.close();
         System.out.println("Haciendo estadísticas de texto. . .");
         System.out.println(n_lineas+" lineas");
-        System.out.println("Los carácteres contando espacios son "+chars_lineas);
+        System.out.println("Los carácteres contando espacios son: "+chars_lineas);
         System.out.println("Los carácteres sin contar espacios son: "+chars_sinl);
         System.out.println("Guardando resultados. . .");
-        
+        FileWriter fw1 = new FileWriter(archivoa,false);
+        BufferedWriter bw1 = new BufferedWriter(fw1);
+        bw1.write("Número de líneas: "+n_lineas+"\nLos carácteres contando espacios son: "+chars_lineas+"\n Los carácteres sin contar espacios son: "+chars_sinl);
+        bw1.newLine();
+        bw1.flush();
+        System.out.println("Resultados guardados");
+        fw1.close();
+        bw1.close();
+
+
+
     }
 
-public static void analisisContenido() throws IOException {
+public static void analisisContenido(File archivoa) throws IOException {
     Scanner sc=new Scanner(System.in);
     System.out.println("Escriba la ruta del archivo que quiere que sea leída: ");
     String ruta=sc.next();
@@ -87,11 +97,20 @@ public static void analisisContenido() throws IOException {
     }
     f.close();
     System.out.println("Sale un total de "+n_palabra);
+    FileWriter fw1 = new FileWriter(archivoa,false);
+    BufferedWriter bw1 = new BufferedWriter(fw1);
+    bw1.write("La palabra "+palabra+" sale un total de "+n_palabra+" veces");
+    bw1.newLine();
+    bw1.flush();
+    System.out.println("Resultados guardados");
+    fw1.close();
+    bw1.close();
 }
 public static void ampliación(){
     Scanner sc=new Scanner(System.in);
     System.out.println("Escriba la ruta del archivo que quiere que sea leída: ");
     String ruta=sc.next();
+
     }
 
 }
