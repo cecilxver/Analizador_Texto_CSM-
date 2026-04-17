@@ -5,39 +5,47 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner sc=new Scanner(System.in);
         System.out.println("Bienvenido al analizador de texto 3000");
-        System.out.println("Elige una opción \n1. Estadísticas de texto\n2. Análisis de contenido\n4. Salir");
+        System.out.println("Elige una opción \n1. Estadísticas de texto\n2. Análisis de contenido \n3. Contador de frases \n4. Salir");
         int opcion=sc.nextInt();
         boolean menu_bucle=true;
         File archivo_aguardar=new File("resultados.txt");
         archivo_aguardar.createNewFile();
-        while (opcion!=4){
-            if(!menu_bucle){
-                System.out.println("Elige una opción \n1. Estadísticas de texto\n2. Análisis de contenido\n4. Salir");
+        FileWriter fw1 = new FileWriter(archivo_aguardar,false);
+        BufferedWriter bw1 = new BufferedWriter(fw1);
+//───────────────{ MENU }───────────────
+        while (opcion!=4){ //mientras no sea la opción de salida, debe continuar el bucle
+            if(!menu_bucle){ //si el boolean es false, debe mostrar de nuevo el menú
+                System.out.println("Elige una opción \n1. Estadísticas de texto\n2. Análisis de contenido\n3. Contador de frases \n4. Salir");
                  opcion=sc.nextInt();
             }
             switch (opcion){
                 case 1:
-                    analizarTexto(archivo_aguardar);
+                    analizarTexto(archivo_aguardar,bw1);
                     menu_bucle=false;
                     break;
                 case 2:
-                    analisisContenido(archivo_aguardar);
+                    analisisContenido(archivo_aguardar,bw1);
                     menu_bucle=false;
                     break;
                 case 3:
-                    ampliación();
+                    ampliación(archivo_aguardar,bw1);
                     menu_bucle=false;
                     break;
                 case 4:
                     System.out.println("Saliendo del sistema. . .");
-                break;
+                    break;
+                default:
+                    System.out.println("Opción no válida, por favor, vuelve a intentarlo");
+                    menu_bucle=false;
+                    break;
 
             }
         }
-
+        bw1.close();
+        fw1.close();
 
     }
-    public static void analizarTexto(File archivoa) throws IOException {
+    public static void analizarTexto(File archivoa, BufferedWriter bw1) throws IOException {
         Scanner sc=new Scanner(System.in);
         System.out.println("Escriba la ruta del archivo que quiere que sea leída: ");
         String ruta=sc.next();
@@ -68,20 +76,16 @@ public class Main {
         System.out.println("Los carácteres contando espacios son: "+chars_lineas);
         System.out.println("Los carácteres sin contar espacios son: "+chars_sinl);
         System.out.println("Guardando resultados. . .");
-        FileWriter fw1 = new FileWriter(archivoa,false);
-        BufferedWriter bw1 = new BufferedWriter(fw1);
         bw1.write("Número de líneas: "+n_lineas+"\nLos carácteres contando espacios son: "+chars_lineas+"\n Los carácteres sin contar espacios son: "+chars_sinl);
         bw1.newLine();
         bw1.flush();
         System.out.println("Resultados guardados");
-        fw1.close();
-        bw1.close();
 
 
 
     }
 
-public static void analisisContenido(File archivoa) throws IOException {
+public static void analisisContenido(File archivoa, BufferedWriter bw1) throws IOException {
     Scanner sc=new Scanner(System.in);
     System.out.println("Escriba la ruta del archivo que quiere que sea leída: ");
     String ruta=sc.next();
@@ -101,16 +105,13 @@ public static void analisisContenido(File archivoa) throws IOException {
     }
     f.close();
     System.out.println("Sale un total de "+n_palabra);
-    FileWriter fw1 = new FileWriter(archivoa,false);
-    BufferedWriter bw1 = new BufferedWriter(fw1);
     bw1.write("La palabra "+palabra+" sale un total de "+n_palabra+" veces");
     bw1.newLine();
     bw1.flush();
     System.out.println("Resultados guardados");
-    fw1.close();
-    bw1.close();
+
 }
-public static void ampliación() throws IOException {
+public static void ampliación(File archivoa, BufferedWriter bw1) throws IOException {
     Scanner sc=new Scanner(System.in);
     System.out.println("Escriba la ruta del archivo que quiere que sea leída: ");
     String ruta=sc.next();
@@ -130,6 +131,9 @@ public static void ampliación() throws IOException {
     linea= br.readLine();
     }
     System.out.println("Hay "+n_frases+" en total");
+    bw1.write("Hay "+n_frases+" frases en total");
+    bw1.flush();
     br.close();
+
 f.close();
 }}
