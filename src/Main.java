@@ -24,6 +24,10 @@ public class Main {
                     analisisContenido(archivo_aguardar);
                     menu_bucle=false;
                     break;
+                case 3:
+                    ampliación();
+                    menu_bucle=false;
+                    break;
                 case 4:
                     System.out.println("Saliendo del sistema. . .");
                 break;
@@ -106,11 +110,26 @@ public static void analisisContenido(File archivoa) throws IOException {
     fw1.close();
     bw1.close();
 }
-public static void ampliación(){
+public static void ampliación() throws IOException {
     Scanner sc=new Scanner(System.in);
     System.out.println("Escriba la ruta del archivo que quiere que sea leída: ");
     String ruta=sc.next();
-
+    File archivo=new File(ruta);
+    FileReader f=new FileReader(archivo);
+    BufferedReader br=new BufferedReader(f);
+    String linea=br.readLine();
+    System.out.println("Haciendo conteo de frases. . .");
+    int n_frases=0;
+    while(linea!=null){
+    for (int i = 0; i < linea.length(); i++) {
+        if (linea.charAt(i) == '.') {
+            n_frases++;
+            System.out.println(linea);
+        }
     }
-
-}
+    linea= br.readLine();
+    }
+    System.out.println("Hay "+n_frases+" en total");
+    br.close();
+f.close();
+}}
