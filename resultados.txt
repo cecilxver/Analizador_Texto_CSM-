@@ -1,0 +1,3 @@
+Número de líneas5
+Los carácteres contando espacios son293
+ Los carácteres sin contar espacios son: 244
